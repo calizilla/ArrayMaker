@@ -1,9 +1,6 @@
 ArrayMaker
-==========
 
 Version 1.1
-
-Creates transposed PED files of SNP genotypes at chosen loci from BAM files of mammalian whole genome sequence data
 
 This program generates SNP calls from whole-genome alignments (BAM format) and outputs them in a transposed PED (tped) format. It was designed to create tpeds for genotype calls at any list of markers in BED format (currently only SNPs) for any species with a reference genome sequence. The program assumes the autosomes are designated in consecutive numeric order, as in human etc. Provided with the program are example BED files for the Equine SNP50 and SNP70K arrays and the Canine HD array (canFam2 and canFam3 coordinates). Calls can be made in the top (http://res.illumina.com/documents/products/technotes/technote_topbot.pdf) or forward call orientation. 
 
