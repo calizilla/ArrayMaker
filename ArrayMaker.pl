@@ -28,7 +28,7 @@ use strict;
 
 #------------------------------------------------------------------------------------------------------
 #Set parameters: 
-my @need = ('chrs', 'strand', 'mincov', 'maxcov',  'str', 'bam', 'bed', 'out', 'ref', 'sam', 'bcf', 'tfam', 'rprefix', 'tprefix', 'add', 'nocheck', 'vcf'); 
+my @need = ('chrs', 'strand', 'mincov', 'maxcov',  'str', 'bam', 'bed', 'out', 'ref', 'sam', 'bcf', 'tfam', 'prefix', 'add', 'nocheck', 'vcf');
 my ($last_autosome, $strand, $min_cov, $max_cov, $bam_list, $bed, $out, $ngs_vcf, $ngs_tped, $refseq, $samtools, $bcftools, $ngs_tfam, $ref_prefix, $tped_prefix, $add, $nocheck, $vcf);
 my $str = 'high'; #default
 use vars qw(%varshash $varshash %paramhash $paramhash %tophash $tophash %comphash $comphash %maphash $maphash %vcfhash $vcfhash %arrayhash $arrayhash);   
@@ -41,7 +41,7 @@ if (@ARGV) {
 	STORE_VARS: foreach my $elem (@ARGV) {
 		my $what = ''; my $is = '';
 		if ($elem=~m/\S\=\S/) { #no spaces separating args/vals, split as normal. 
-			($what, $is) = split('=',$elem); 
+			($what, $is) = split('=',$elem);  
 		} 
 		else {#user error: whitespace separating arguments and values. Make sure no matter how many spaces and where, the args and vals can still be set. 
 			$elem=~s/\s//; $elem=~s/\=//; #remove whitespace and equal sign if present. Is the value an argument ($store is not filled) or is it a value ($store is filled with the argument label) 
@@ -230,15 +230,10 @@ if (!$exists) {
 } $exists = '';
 
 #Chromosomal prefix in reference fasta:
-if ($varshash->{rprefix}->{value}) {
-	$ref_prefix = $varshash->{rprefix}->{value}; #If no chromosomal prefix is given, program will use default of no prefix, eg 1 instead of chr1 or chrom1.
+if ($varshash->{prefix}->{value}) {
+	$ref_prefix = $varshash->{prefix}->{value}; #If no chromosomal prefix is given, program will use default of no prefix, eg 1 instead of chr1 or chrom1.
+	$tped_prefix = $varshash->{prefix}->{value};
 	$var_summary.= "Chromosomal prefix in reference fasta: $ref_prefix\n";  
-}
-
-#Chromosomal prefix to include in SNP ID in output tped:
-if ($varshash->{tprefix}->{value}) {
-	$tped_prefix = $varshash->{tprefix}->{value}; #If no chromosomal prefix is given, program will use default of no prefix, eg 1 instead of chr1 or chrom1.
-	$var_summary.= "Chromosomal prefix to include in SNP ID: $tped_prefix\n";  
 }
 
 #Create new BED file with prefix:
